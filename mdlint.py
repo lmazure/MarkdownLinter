@@ -39,16 +39,22 @@ def missing_utm_parameters(content):
     lines = content.splitlines()
     for line in lines:
         if re.search(pattern, line, re.IGNORECASE):
-            if "?utm_source=Doc_AUTOM_DEVOPS&utm_medium=link" not in line:
+            if "?utm_source=Doc_TM&utm_medium=link" not in line:
                 print("missing utm parameters: " + line)
 
 def missing_blank_target(content):
-    pattern = r'https?:/'
+    pattern = r'\( *https?:/'
     lines = content.splitlines()
     for line in lines:
         if re.search(pattern, line, re.IGNORECASE):
             if '{:target="_blank"}' not in line:
                 print("missing blank target: " + line)
+
+def wrong_apostrophe(content):
+    lines = content.splitlines()
+    for line in lines:
+        if '’' in line:
+            print("wrong apostrophe: " + line)
 
 def process_md_files(directory):
     for root, dirs, files in os.walk(directory):
@@ -62,6 +68,7 @@ def process_md_files(directory):
                         filename_extension_not_in_backticks(content)
                         missing_utm_parameters(content)
                         missing_blank_target(content)
+                        wrong_apostrophe(content)
                 except IOError as e:
                     print(f"Error reading file {file_path}: {e}")
                 except Exception as e:
