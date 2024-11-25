@@ -1,4 +1,4 @@
-import colorama 
+from colorama import init, Fore, Style
 import os
 import argparse
 import re
@@ -56,6 +56,12 @@ def wrong_apostrophe(content):
         if '’' in line:
             print("wrong apostrophe: " + line)
 
+def wrong_double_quote(content):
+    lines = content.splitlines()
+    for line in lines:
+        if ('«' in line) or ('»' in line) or ('“' in line) or ('”' in line):
+            print("wrong double quotes: " + line)
+
 def process_md_files(directory):
     for root, dirs, files in os.walk(directory):
         for file in files:
@@ -64,17 +70,21 @@ def process_md_files(directory):
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         content = f.read()
-                        print(f"Processing file: {file_path}")
+                        print(f"{Fore.LIGHTBLACK_EX}Processing file: {file_path}{Style.RESET_ALL}")
                         filename_extension_not_in_backticks(content)
                         missing_utm_parameters(content)
                         missing_blank_target(content)
                         wrong_apostrophe(content)
+                        wrong_double_quote(content)
                 except IOError as e:
                     print(f"Error reading file {file_path}: {e}")
                 except Exception as e:
                     print(f"Unexpected error processing file {file_path}: {e}")
 
 if __name__ == "__main__":
+    # Initialize colorama
+    init()
+    
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Recursively process .md files in a specified directory.")
     parser.add_argument("directory", help="The directory containing .md files to process")
