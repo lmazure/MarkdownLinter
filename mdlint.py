@@ -55,6 +55,8 @@ def wrong_apostrophe(content):
     for line in lines:
         if '’' in line:
             print("wrong apostrophe: " + line)
+        if '‘' in line:
+            print("wrong apostrophe: " + line)
 
 def wrong_double_quote(content):
     lines = content.splitlines()
