@@ -82,9 +82,10 @@ def process_md_files(directory):
                     print(f"Unexpected error processing file {file_path}: {e}")
 
 if __name__ == "__main__":
+
     # Initialize colorama
     init()
-    
+
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Recursively process .md files in a specified directory.")
     parser.add_argument("directory", help="The directory containing .md files to process")
