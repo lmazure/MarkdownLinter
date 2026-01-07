@@ -64,6 +64,14 @@ def wrong_double_quote(content):
         if ('«' in line) or ('»' in line) or ('“' in line) or ('”' in line):
             print("wrong double quotes: " + line)
 
+@remove_code
+def wrong_ellipsis(content):
+    pattern = r'\.\.\.'
+    lines = content.splitlines()
+    for line in lines:
+        if re.search(pattern, line, re.IGNORECASE):
+            print("wrong ellipsis: " + line)
+
 def process_md_files(directory):
     for root, dirs, files in os.walk(directory):
         for file in files:
@@ -78,6 +86,7 @@ def process_md_files(directory):
                         missing_blank_target(content)
                         wrong_apostrophe(content)
                         wrong_double_quote(content)
+                        wrong_ellipsis(content)
                 except IOError as e:
                     print(f"Error reading file {file_path}: {e}")
                 except Exception as e:
