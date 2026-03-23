@@ -80,7 +80,8 @@ def process_md_files(directory):
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         content = f.read()
-                        print(f"{Fore.LIGHTBLACK_EX}Processing file: {file_path}{Style.RESET_ALL}")
+                        rel_path = os.path.relpath(file_path, directory)
+                        print(f"{Fore.LIGHTBLACK_EX}Processing file: {rel_path}{Style.RESET_ALL}")
                         filename_extension_not_in_backticks(content)
                         missing_utm_parameters(content)
                         missing_blank_target(content)
